@@ -14,10 +14,15 @@
 >
 >
 > def set_generator(urls: list[str]) -> Generator:
->    """Generator"""
+>    """Set new generator"""
 >    while True: 
 >       for url in urls:
->           yield url           # Returns the URL of the node
+>           yield url           # Returns generator object
+> 
+>    
+> def update_generator(generator: Generator) -> str:
+>    """Update generator"""
+>    return next(generator)     # Returns the URL of the node
 >
 > ```
 
@@ -30,7 +35,7 @@
 > ```python
 > import time
 > import requests
-> from .generator import set_generator
+> from .generator import set_generator, update_generator
 > from .updater import update_transaction
 > from .config import logger
 > 
@@ -46,7 +51,7 @@
 >           data = requests.request(POST, url + "/transaction/show", json={...})
 >       except requests.HTTPError as error:
 >           # This code updates the node
->           logger.error(f"THE NODE DIED! UPDATE URL! NEW URL: {next(generator)}")
+>           logger.error(f"THE NODE DIED! UPDATE URL! NEW URL: {update_generator(generator)}")
 >       else:
 >           # Add tx to db
 >           update_transaction(tx=data["transaction"])

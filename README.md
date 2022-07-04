@@ -45,7 +45,7 @@
 >   # Set generator
 >   generator = set(urls=["https://main.node.com", "https://helper.node.com", ...])
 >   # Put url path 
->   url = next(generator)
+>   url = update(generator)
 >   while True:
 >       try:
 >           data = requests.request(POST, url + "/transaction/show", json={...})

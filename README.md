@@ -13,14 +13,14 @@
 > from typing import Generator
 >
 >
-> def set_generator(urls: list[str]) -> Generator:
+> def set(urls: list[str]) -> Generator:
 >    """Set new generator"""
 >    while True: 
 >       for url in urls:
 >           yield url           # Returns generator object
 > 
 >    
-> def update_generator(generator: Generator) -> str:
+> def update(generator: Generator) -> str:
 >    """Update generator"""
 >    return next(generator)     # Returns the URL of the node
 >
@@ -35,7 +35,7 @@
 > ```python
 > import time
 > import requests
-> from .generator import set_generator, update_generator
+> from .generator import set, update
 > from .updater import update_transaction
 > from .config import logger
 > 
@@ -43,7 +43,7 @@
 > def parser():
 >   """Parser mode"""
 >   # Set generator
->   generator = set_generator(urls=["https://main.node.com", "https://helper.node.com", ...])
+>   generator = set(urls=["https://main.node.com", "https://helper.node.com", ...])
 >   # Put url path 
 >   url = next(generator)
 >   while True:
@@ -51,7 +51,7 @@
 >           data = requests.request(POST, url + "/transaction/show", json={...})
 >       except requests.HTTPError as error:
 >           # This code updates the node
->           logger.error(f"THE NODE DIED! UPDATE URL! NEW URL: {update_generator(generator)}")
+>           logger.error(f"THE NODE DIED! UPDATE URL! NEW URL: {update(generator)}")
 >       else:
 >           # Add tx to db
 >           update_transaction(tx=data["transaction"])
